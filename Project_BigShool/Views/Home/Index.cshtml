@@ -1,0 +1,90 @@
+﻿@model IEnumerable<Project_BigShool.Models.Course>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <ul class="course">
+        @foreach (var item in Model)
+        {
+            <li>
+                <div class="date">
+                    <div class="month">
+                        @item.DateTime.ToString("MM")
+                    </div>
+                    <div class="day">
+                        @item.DateTime.ToString("dd")
+                    </div>
+                </div>
+                <div class="details">
+                    <span class="lecture">
+                        @item.Name
+                        @if (ViewBag.LoginUser != null)
+                        {
+                            if (item.isShowFollow)
+                            {
+                                <button data-user-id="@item.LecturerId" class="btn btn-default btn-sm js-tongle-follow">Follow</button>
+                            }
+                            else
+                            {
+                                <button data-user-id="@item.LecturerId" class="btn btn-success btn-sm js-tongle-follow">Following</button>
+
+                            }
+                        }
+                    </span>
+                    <br />
+                    <span class="category">
+                        @item.Category.Name
+
+                        <!--Neu dang nhap thi moi cho phep render the button-->
+                        @if (ViewBag.LoginUser != null)
+                        {
+                            if (item.isShowGoing)
+                            {
+                                <button data-course-id="@item.Id" class="btn btn-default btn-sm js-tongle-attendance">Going?</button>
+                            }
+                            else
+                            {
+                                <button data-course-id="@item.Id" class="btn btn-info btn-sm js-tongle-attendance">Going</button>
+
+                            }
+                        }
+                    </span>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+
+@section scripts
+{
+<script>
+    $(document).ready(function () {
+        $(".js-tongle-attendance").click(function (e) {
+            var button = $(e.target);
+            $.post("/api/attendances", { Id: button.attr("data-course-id") })
+                .done(function () {
+                    button.removeClass("btn-default");
+                    button.addClass("btn-info");
+                    button.text("Going");
+                }).fail(function () {
+                    alert("Something fail");
+                });
+        });
+        $(".js-tongle-follow").click(function (e) {
+            var button = $(e.target);
+            $.post("/api/followings", { FolloweeId: button.attr("data-user-id") })
+                .done(function () {
+                    button.addClass("btn-success");
+                    button.text("Following");
+                }).fail(function () {
+                    alert("Something fail");
+                });
+            /*location.reload();*/
+        });
+    });
+    
+</script>
+}
