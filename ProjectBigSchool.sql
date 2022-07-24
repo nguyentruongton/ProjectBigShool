@@ -2,13 +2,6 @@ USE [master]
 GO
 /****** Object:  Database [ProjectBigSchool]    Script Date: 07.04.2022 23:36:58 ******/
 CREATE DATABASE [ProjectBigSchool]
- CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = N'ProjectBigSchool', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\ProjectBigSchool.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
- LOG ON 
-( NAME = N'ProjectBigSchool_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\ProjectBigSchool_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
- WITH CATALOG_COLLATION = DATABASE_DEFAULT
-GO
 ALTER DATABASE [ProjectBigSchool] SET COMPATIBILITY_LEVEL = 150
 GO
 IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
